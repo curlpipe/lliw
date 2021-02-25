@@ -7,8 +7,5 @@ license = "MIT"
 description = "Text colours and styles for your terminal with no additional dependencies"
 repository = "https://github.com/curlpipe/lliw"
 readme = "README.md"
-keywords = ["terminal", "colours", "colour", "color", "colors", "ansi", "lightweight"]
+keywords = ["terminal", "color", "colour", "ansi", "lightweight"]
 categories = ["command-line-interface"]
-
-[dependencies]
-# Dependencies are bloat
