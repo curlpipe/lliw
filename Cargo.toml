@@ -1,0 +1,14 @@
+[package]
+name = "lliw"
+version = "0.1.0"
+authors = ["curlpipe <11898833+curlpipe@users.noreply.github.com>"]
+edition = "2018"
+license = "MIT"
+description = "Text colours and styles for your terminal with no additional dependencies"
+repository = "https://github.com/curlpipe/lliw"
+readme = "README.md"
+keywords = ["terminal", "colours", "colour", "color", "colors", "ansi", "lightweight"]
+categories = ["command-line-interface"]
+
+[dependencies]
+# Dependencies are bloat
