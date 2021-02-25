@@ -1,5 +1,5 @@
 # Lliw 
-*Roughly pronounced khlew*
+*Roughly pronounced khlew*, it is "colour" in Welsh
 
 Lliw provides colours for your terminal, with no additional dependencies.
 
