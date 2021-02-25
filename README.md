@@ -82,9 +82,10 @@ There is also 1 struct, `Reset`.
 	+ Consists of the types: Bold, NoBold, Underline, NoUnderline, Strike, NoStrike, Italic, NoItalic, Inverse, NoInverse, Faint and NoFaint.
 		+ Bold: Make the text bold, can be terminated with `NoBold`
 		+ Underline: Make the text have an underline, can be terminated with `NoUnderline`
-		+ Italic: Make the text have an underline, can be terminated with `NoItalic`
-		+ Inverse: Make the text have an underline, can be terminated with `NoInverse`
-		+ Faint: Make the text have an underline, can be terminated with `NoFaint`
+		+ Italic: Make the text go italic, can be terminated with `NoItalic`
+		+ Inverse: Inverse the text colours, can be terminated with `NoInverse`
+		+ Faint: Make the text fainter, can be terminated with `NoFaint`
+		+ Strike: Make the text have a strike through it, can be terminated with `NoStrike`
 - `Reset` - This is a full reset struct that resets foreground, background and style when used.
 
 Be sure to check out the docs over at https://docs.rs/lliw
