@@ -62,6 +62,7 @@ pub const RESET: &str = "[m";
 /// Foreground colours for setting text colour
 #[derive(Debug, Clone, Copy)]
 pub enum Fg {
+    Rgb(u8, u8, u8),
     Black,
     Red,
     Green,
@@ -84,10 +85,10 @@ pub enum Fg {
 // Allow use in format macros
 impl fmt::Display for Fg {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(
-            f,
-            "{}",
-            match self {
+        if let Fg::Rgb(r, g, b) = self {
+            write!(f, "[38;2;{};{};{}m", r, g, b)
+        } else {
+            write!(f, "{}", match self {
                 Fg::Black => FG_BLACK,
                 Fg::Red => FG_RED,
                 Fg::Green => FG_GREEN,
@@ -105,14 +106,16 @@ impl fmt::Display for Fg {
                 Fg::LightCyan => FG_LIGHTCYAN,
                 Fg::LightWhite => FG_LIGHTWHITE,
                 Fg::Reset => FG_RESET,
-            }
-        )
+                Fg::Rgb(_, _, _) => unreachable!(),
+            })
+        }
     }
 }
 
 /// Background colours for setting text background colour
 #[derive(Debug, Clone, Copy)]
 pub enum Bg {
+    Rgb(u8, u8, u8),
     Black,
     Red,
     Green,
@@ -135,10 +138,10 @@ pub enum Bg {
 // Allow use in format macros
 impl fmt::Display for Bg {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(
-            f,
-            "{}",
-            match self {
+        if let Bg::Rgb(r, g, b) = self {
+            write!(f, "[48;2;{};{};{}m", r, g, b)
+        } else {
+            write!(f, "{}", match self {
                 Bg::Black => BG_BLACK,
                 Bg::Red => BG_RED,
                 Bg::Green => BG_GREEN,
@@ -156,8 +159,9 @@ impl fmt::Display for Bg {
                 Bg::LightCyan => BG_LIGHTCYAN,
                 Bg::LightWhite => BG_LIGHTWHITE,
                 Bg::Reset => BG_RESET,
-            }
-        )
+                Bg::Rgb(_, _, _) => unreachable!(),
+            })
+        }
     }
 }
 

@@ -60,6 +60,19 @@ fn main() {
     print!("{}", Fg::LightRed);
     print!("Hello\nThere!");
     print!("{}\n", Reset);
+
+    // You can also use an RGB value if you want 24-bit colours
+    println!(
+        "{}R{}a{}i{}n{}b{}o{}w{}",
+        Fg::Rgb(255, 0, 0),
+        Fg::Rgb(255, 128, 0),
+        Fg::Rgb(255, 255, 0),
+        Fg::Rgb(0, 255, 0),
+        Fg::Rgb(0, 255, 255),
+        Fg::Rgb(128, 0, 255),
+        Fg::Rgb(255, 0, 128),
+        Fg::Reset,
+    );
 }
 ```
 
