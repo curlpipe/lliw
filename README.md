@@ -41,11 +41,11 @@ fn main() {
     
     // You can even use it in more complicated ways
     println!(
-            "{}{}Attention!{}{} You have {}{}1{}{} new message",
-            Style::Underline, Fg::Yellow,
-            Style::NoUnderline, Fg::Reset,
-            Bg::White, Fg::Black,
-            Bg::Reset, Fg::Reset,
+        "{}{}Attention!{}{} You have {}{}1{}{} new message",
+        Style::Underline, Fg::Yellow,
+        Style::NoUnderline, Fg::Reset,
+        Bg::White, Fg::Black,
+        Bg::Reset, Fg::Reset,
     );
     
     // You can make them go over the top of each other too
