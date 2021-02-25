@@ -82,15 +82,17 @@ There are 3 enums provided with lliw, `Fg`, `Bg` and `Style`.
 There is also 1 struct, `Reset`.
 
 - `Fg` - Control the text colour
-	+ Consists of the types: Black, Red, Green, Yellow, Blue, Purple, Cyan, White,
+	+ Consists of the types: Rgb, Black, Red, Green, Yellow, Blue, Purple, Cyan, White,
     LightBlack, LightRed, LightGreen, LightYellow,
     LightBlue, LightPurple, LightCyan, LightWhite and Reset.
     + The colours are reset using the `Reset` variant.
+    + You can use the Rgb variant to provide true 24-bit colour values
 - `Bg` - Control the text background colour
-	+ Consists of the types: Black, Red, Green, Yellow, Blue, Purple, Cyan, White,
+	+ Consists of the types: Rgb, Black, Red, Green, Yellow, Blue, Purple, Cyan, White,
     LightBlack, LightRed, LightGreen, LightYellow,
     LightBlue, LightPurple, LightCyan, LightWhite and Reset.
     + The colours are reset using the `Reset` variant.
+    + You can use the Rgb variant to provide true 24-bit colour values
 - `Style` - Control the text styles
 	+ Consists of the types: Bold, NoBold, Underline, NoUnderline, Strike, NoStrike, Italic, NoItalic, Inverse, NoInverse, Faint and NoFaint.
 		+ Bold: Make the text bold, can be terminated with `NoBold`
