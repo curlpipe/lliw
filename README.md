@@ -6,6 +6,7 @@ Lliw provides colours for your terminal, with no additional dependencies.
 # Aims
 
 - No dependencies
+- Works in `#![no_std]` environments
 - Provides colours and styles in a non-opinionated way
 - Provides multiple ways to use
 - Doesn't make your code look like trash

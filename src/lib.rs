@@ -1,6 +1,7 @@
 // Zero crate colour library
+#![no_std]
 #![warn(clippy::pedantic, clippy::all)]
-use std::fmt;
+use core::fmt;
 
 // Foreground colours
 pub const FG_BLACK: &str = "[38;5;0m";
