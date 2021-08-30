@@ -64,6 +64,7 @@ pub const RESET: &str = "[m";
 #[derive(Debug, Clone, Copy)]
 pub enum Fg {
     Rgb(u8, u8, u8),
+    Hex(&'static str),
     Black,
     Red,
     Green,
@@ -88,6 +89,9 @@ impl fmt::Display for Fg {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         if let Fg::Rgb(r, g, b) = self {
             write!(f, "[38;2;{};{};{}m", r, g, b)
+        } else if let Fg::Hex(h) = self {
+            let rgb = hex_to_rgb(h);
+            write!(f, "[38;2;{};{};{}m", rgb.0, rgb.1, rgb.2)
         } else {
             write!(f, "{}", match self {
                 Fg::Black => FG_BLACK,
@@ -107,7 +111,7 @@ impl fmt::Display for Fg {
                 Fg::LightCyan => FG_LIGHTCYAN,
                 Fg::LightWhite => FG_LIGHTWHITE,
                 Fg::Reset => FG_RESET,
-                Fg::Rgb(_, _, _) => unreachable!(),
+                Fg::Rgb(_, _, _) | Fg::Hex(_) => unreachable!(),
             })
         }
     }
@@ -117,6 +121,7 @@ impl fmt::Display for Fg {
 #[derive(Debug, Clone, Copy)]
 pub enum Bg {
     Rgb(u8, u8, u8),
+    Hex(&'static str),
     Black,
     Red,
     Green,
@@ -141,6 +146,9 @@ impl fmt::Display for Bg {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         if let Bg::Rgb(r, g, b) = self {
             write!(f, "[48;2;{};{};{}m", r, g, b)
+        } else if let Bg::Hex(h) = self {
+            let rgb = hex_to_rgb(h);
+            write!(f, "[48;2;{};{};{}m", rgb.0, rgb.1, rgb.2)
         } else {
             write!(f, "{}", match self {
                 Bg::Black => BG_BLACK,
@@ -160,7 +168,7 @@ impl fmt::Display for Bg {
                 Bg::LightCyan => BG_LIGHTCYAN,
                 Bg::LightWhite => BG_LIGHTWHITE,
                 Bg::Reset => BG_RESET,
-                Bg::Rgb(_, _, _) => unreachable!(),
+                Bg::Rgb(_, _, _) | Bg::Hex(_) => unreachable!(),
             })
         }
     }
@@ -215,5 +223,43 @@ pub struct Reset;
 impl fmt::Display for Reset {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{}", RESET)
+    }
+}
+
+// Function to conver hex code to rgb
+fn hex_to_rgb(hex: &str) -> (u8, u8, u8) {
+    let mut hex = hex;
+    // The '#' isn't necessary
+    if hex.starts_with("#") {
+        hex = &hex[1 ..];
+    }
+    // If the hex-code is invalid it defaults to black
+    let mut rgb: (u8, u8, u8) = (0, 0, 0);
+    if hex.len() == 6 {
+        rgb.0 = (hex_to_dec(&hex[0 .. 1]) * 16) + hex_to_dec(&hex[1 .. 2]);
+        rgb.1 = (hex_to_dec(&hex[2 .. 3]) * 16) + hex_to_dec(&hex[3 .. 4]);
+        rgb.2 = (hex_to_dec(&hex[4 .. 5]) * 16) + hex_to_dec(&hex[5 .. 6]);
+    }
+    rgb
+}
+
+fn hex_to_dec(hex: &str) -> u8 {
+    match hex {
+        "1" => 1,
+        "2" => 2,
+        "3" => 3,
+        "4" => 4,
+        "5" => 5,
+        "6" => 6,
+        "7" => 7,
+        "8" => 8,
+        "9" => 9,
+        "A" | "a" => 10,
+        "B" | "b" => 11,
+        "C" | "c" => 12,
+        "D" | "d" => 13,
+        "E" | "e" => 14,
+        "F" | "f" => 15,
+        _ => 0,
     }
 }
