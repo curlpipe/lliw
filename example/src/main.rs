@@ -42,4 +42,14 @@ fn main() {
         Fg::Rgb(255, 0, 128),
         Fg::Reset,
     );
+    // Don't like RGB? You can use hex codes too!
+    println!(
+        "{}Hex{} {}>{} {}RGB{}",
+        Fg::Hex("519f50"),
+        Fg::Reset,
+        Bg::Hex("#FBB829"),
+        Bg::Reset,
+        Fg::Hex("EF2F27"),
+        Fg::Reset,
+    );
 }
