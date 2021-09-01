@@ -87,32 +87,36 @@ pub enum Fg {
 // Allow use in format macros
 impl fmt::Display for Fg {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        if let Fg::Rgb(r, g, b) = self {
-            write!(f, "[38;2;{};{};{}m", r, g, b)
-        } else if let Fg::Hex(h) = self {
-            let rgb = hex_to_rgb(h);
-            write!(f, "[38;2;{};{};{}m", rgb.0, rgb.1, rgb.2)
-        } else {
-            write!(f, "{}", match self {
-                Fg::Black => FG_BLACK,
-                Fg::Red => FG_RED,
-                Fg::Green => FG_GREEN,
-                Fg::Yellow => FG_YELLOW,
-                Fg::Blue => FG_BLUE,
-                Fg::Purple => FG_PURPLE,
-                Fg::Cyan => FG_CYAN,
-                Fg::White => FG_WHITE,
-                Fg::LightBlack => FG_LIGHTBLACK,
-                Fg::LightRed => FG_LIGHTRED,
-                Fg::LightGreen => FG_LIGHTGREEN,
-                Fg::LightYellow => FG_LIGHTYELLOW,
-                Fg::LightBlue => FG_LIGHTBLUE,
-                Fg::LightPurple => FG_LIGHTPURPLE,
-                Fg::LightCyan => FG_LIGHTCYAN,
-                Fg::LightWhite => FG_LIGHTWHITE,
-                Fg::Reset => FG_RESET,
-                Fg::Rgb(_, _, _) | Fg::Hex(_) => unreachable!(),
-            })
+        match self {
+            Fg::Rgb(r, g, b) => write!(f, "[38;2;{};{};{}m", r, g, b),
+            Fg::Hex(h) => {
+                let rgb = hex_to_rgb(h);
+                write!(f, "[38;2;{};{};{}m", rgb.0, rgb.1, rgb.2)
+            }
+            col => write!(
+                f,
+                "{}",
+                match col {
+                    Fg::Black => FG_BLACK,
+                    Fg::Red => FG_RED,
+                    Fg::Green => FG_GREEN,
+                    Fg::Yellow => FG_YELLOW,
+                    Fg::Blue => FG_BLUE,
+                    Fg::Purple => FG_PURPLE,
+                    Fg::Cyan => FG_CYAN,
+                    Fg::White => FG_WHITE,
+                    Fg::LightBlack => FG_LIGHTBLACK,
+                    Fg::LightRed => FG_LIGHTRED,
+                    Fg::LightGreen => FG_LIGHTGREEN,
+                    Fg::LightYellow => FG_LIGHTYELLOW,
+                    Fg::LightBlue => FG_LIGHTBLUE,
+                    Fg::LightPurple => FG_LIGHTPURPLE,
+                    Fg::LightCyan => FG_LIGHTCYAN,
+                    Fg::LightWhite => FG_LIGHTWHITE,
+                    Fg::Reset => FG_RESET,
+                    Fg::Rgb(_, _, _) | Fg::Hex(_) => unreachable!(),
+                }
+            ),
         }
     }
 }
@@ -144,32 +148,36 @@ pub enum Bg {
 // Allow use in format macros
 impl fmt::Display for Bg {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        if let Bg::Rgb(r, g, b) = self {
-            write!(f, "[48;2;{};{};{}m", r, g, b)
-        } else if let Bg::Hex(h) = self {
-            let rgb = hex_to_rgb(h);
-            write!(f, "[48;2;{};{};{}m", rgb.0, rgb.1, rgb.2)
-        } else {
-            write!(f, "{}", match self {
-                Bg::Black => BG_BLACK,
-                Bg::Red => BG_RED,
-                Bg::Green => BG_GREEN,
-                Bg::Yellow => BG_YELLOW,
-                Bg::Blue => BG_BLUE,
-                Bg::Purple => BG_PURPLE,
-                Bg::Cyan => BG_CYAN,
-                Bg::White => BG_WHITE,
-                Bg::LightBlack => BG_LIGHTBLACK,
-                Bg::LightRed => BG_LIGHTRED,
-                Bg::LightGreen => BG_LIGHTGREEN,
-                Bg::LightYellow => BG_LIGHTYELLOW,
-                Bg::LightBlue => BG_LIGHTBLUE,
-                Bg::LightPurple => BG_LIGHTPURPLE,
-                Bg::LightCyan => BG_LIGHTCYAN,
-                Bg::LightWhite => BG_LIGHTWHITE,
-                Bg::Reset => BG_RESET,
-                Bg::Rgb(_, _, _) | Bg::Hex(_) => unreachable!(),
-            })
+        match self {
+            Bg::Rgb(r, g, b) => write!(f, "[48;2;{};{};{}m", r, g, b),
+            Bg::Hex(h) => {
+                let rgb = hex_to_rgb(h);
+                write!(f, "[48;2;{};{};{}m", rgb.0, rgb.1, rgb.2)
+            }
+            col => write!(
+                f,
+                "{}",
+                match col {
+                    Bg::Black => BG_BLACK,
+                    Bg::Red => BG_RED,
+                    Bg::Green => BG_GREEN,
+                    Bg::Yellow => BG_YELLOW,
+                    Bg::Blue => BG_BLUE,
+                    Bg::Purple => BG_PURPLE,
+                    Bg::Cyan => BG_CYAN,
+                    Bg::White => BG_WHITE,
+                    Bg::LightBlack => BG_LIGHTBLACK,
+                    Bg::LightRed => BG_LIGHTRED,
+                    Bg::LightGreen => BG_LIGHTGREEN,
+                    Bg::LightYellow => BG_LIGHTYELLOW,
+                    Bg::LightBlue => BG_LIGHTBLUE,
+                    Bg::LightPurple => BG_LIGHTPURPLE,
+                    Bg::LightCyan => BG_LIGHTCYAN,
+                    Bg::LightWhite => BG_LIGHTWHITE,
+                    Bg::Reset => BG_RESET,
+                    Bg::Rgb(_, _, _) | Bg::Hex(_) => unreachable!(),
+                }
+            ),
         }
     }
 }
@@ -231,35 +239,18 @@ fn hex_to_rgb(hex: &str) -> (u8, u8, u8) {
     let mut hex = hex;
     // The '#' isn't necessary
     if hex.starts_with("#") {
-        hex = &hex[1 ..];
+        hex = &hex[1..];
     }
     // If the hex-code is invalid it defaults to black
     let mut rgb: (u8, u8, u8) = (0, 0, 0);
     if hex.len() == 6 {
-        rgb.0 = (hex_to_dec(&hex[0 .. 1]) * 16) + hex_to_dec(&hex[1 .. 2]);
-        rgb.1 = (hex_to_dec(&hex[2 .. 3]) * 16) + hex_to_dec(&hex[3 .. 4]);
-        rgb.2 = (hex_to_dec(&hex[4 .. 5]) * 16) + hex_to_dec(&hex[5 .. 6]);
+        rgb.0 = hex_to_dec(&hex[0..2]);
+        rgb.1 = hex_to_dec(&hex[2..4]);
+        rgb.2 = hex_to_dec(&hex[4..6]);
     }
     rgb
 }
 
 fn hex_to_dec(hex: &str) -> u8 {
-    match hex {
-        "1" => 1,
-        "2" => 2,
-        "3" => 3,
-        "4" => 4,
-        "5" => 5,
-        "6" => 6,
-        "7" => 7,
-        "8" => 8,
-        "9" => 9,
-        "A" | "a" => 10,
-        "B" | "b" => 11,
-        "C" | "c" => 12,
-        "D" | "d" => 13,
-        "E" | "e" => 14,
-        "F" | "f" => 15,
-        _ => 0,
-    }
+    u8::from_str_radix(hex, 16).unwrap_or(0)
 }
